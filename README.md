@@ -1,5 +1,5 @@
-Wyliodrin App Server
-====================
+Studio Supervisor (wyapp)
+=========================
 
 Server app for connecting to Wyliodrin App.
 
