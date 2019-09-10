@@ -1,0 +1,33 @@
+{
+  "name": "studio-supervisor",
+  "version": "1.0.10",
+  "main": "source/startup.js",
+  "repository": "https://github.com/wyliodrinstudio/studio-supervisor",
+  "dependencies": {
+    "async": "^3.1.0",
+    "debug": "^4.1.1",
+    "lodash": "^4.17.15",
+    "mkdirp": "^0.5.1",
+    "msgpack-lite": "^0.1.26",
+    "node-pty": "^0.8.1",
+    "redis": "^2.8.0",
+    "rimraf": "^3.0.0",
+    "split2": "^3.1.1",
+    "tcp-ping": "^0.1.1",
+    "uuid": "^3.3.3",
+    "wireless-tools": "^0.19.0",
+    "ws": "^7.1.2"
+  },
+  "optionalDependencies": {
+    "serialport": "^7.1.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alexandru Radovici",
+  "license": "Apache",
+  "jshintConfig": {
+    "node": true
+  }
+}
