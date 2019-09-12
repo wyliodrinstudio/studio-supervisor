@@ -5,7 +5,7 @@ var child_process = require ('child_process');
 var boardtype = require ('../settings').boardtype;
 var settings = require ('../settings');
 var uplink = require ('../uplink');
-var msgpack = require ('msgpack-lite');
+var msgpack = require ('msgpack5')();
 var peripherals = require ('../peripherals');
 var path = require ('path');
 
