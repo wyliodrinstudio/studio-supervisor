@@ -36,7 +36,7 @@ function treeToFilesystem(tree,folder,ext,generalMakefile){
 				fs.mkdirSync(d);
 				var makepath = path.join(d, "Makefile.wyliodrin");
 
-				fs.writeFile(makepath, tree[i].m, function(err) {
+				fs.writeFileSync(makepath, tree[i].m, function(err) {
 				    if(err) { console.log(err) }
 				}); 
 
@@ -58,7 +58,7 @@ function treeToFilesystem(tree,folder,ext,generalMakefile){
 					if (child.name.toLowerCase() == "makefile"){
 						//found user defined makefile
 						var makepath = path.join(d, "Makefile.firmware");
-						fs.writeFile(makepath, child.content, function(err) {
+						fs.writeFileSync(makepath, child.content, function(err) {
 						   	if(err) { console.log(err) }
 						});
 						tree[i].children.splice(j,1);
@@ -71,14 +71,14 @@ function treeToFilesystem(tree,folder,ext,generalMakefile){
 				if (!userDefined){
 					//default makefile
 					var makepath = path.join(d, "Makefile.firmware");
-					fs.writeFile(makepath, tree[i].m.ca, function(err) {
+					fs.writeFileSync(makepath, tree[i].m.ca, function(err) {
 					   	if(err) { console.log(err) }
 					});
 				}
 
 				var makepath = path.join(d, "Makefile.send");
 				if (tree[i].m.s){
-					fs.writeFile(makepath, tree[i].m.s, function(err) {
+					fs.writeFileSync(makepath, tree[i].m.s, function(err) {
 				    	if(err) { console.log(err) }
 					});
 					here = false;
@@ -86,7 +86,7 @@ function treeToFilesystem(tree,folder,ext,generalMakefile){
 
 				makepath = path.join(d, "Makefile.compileHere");
 				if (tree[i].m.ch){
-					fs.writeFile(makepath, tree[i].m.ch, function(err) {
+					fs.writeFileSync(makepath, tree[i].m.ch, function(err) {
 				    	if(err) { console.log(err) }
 					});
 					here = true;
@@ -94,7 +94,7 @@ function treeToFilesystem(tree,folder,ext,generalMakefile){
 
 				makepath = path.join(d, "Makefile.flash");
 				if (tree[i].m.f){
-					fs.writeFile(makepath, tree[i].m.f, function(err) {
+					fs.writeFileSync(makepath, tree[i].m.f, function(err) {
 				    	if(err) { console.log(err) }
 					});
 				}
@@ -111,7 +111,7 @@ function treeToFilesystem(tree,folder,ext,generalMakefile){
 			if (tree[i].name.toLowerCase() != "makefile"){
 				var d = path.join(folder, tree[i].name);
 				
-				fs.writeFile(d, tree[i].content, function(err) {
+				fs.writeFileSync(d, tree[i].content, function(err) {
 				    if(err) { console.log(err) }
 				}); 
 			}
@@ -220,7 +220,7 @@ function runProject (p)
 				}
 			}
 
-			fs.writeFile(path.join(dir, "Makefile."+settings.boardtype), generalMakefile, function(err) {
+			fs.writeFileSync(path.join(dir, "Makefile."+settings.boardtype), generalMakefile, function(err) {
 				if(err) { console.log(err); }
 			});
 		}
@@ -269,7 +269,7 @@ function runProject (p)
 
 				projectpid = project.pid;
 
-				fs.writeFileSync (PROJECT_PID_TEMP, projectpid);
+				fs.writeFileSyncSync (PROJECT_PID_TEMP, projectpid);
 
 				if (project) uplink.send ('tp', {a:'start', r:'d'});
 				else uplink.send ('tp', {a:'start', r:'e'});
