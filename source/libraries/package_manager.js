@@ -108,8 +108,8 @@ uplink.tags.on ('pm', function (p)
 		if (p.l === 'nodejs')
 		{
 			manager = (util.isWindows ()?'npm.cmd':'npm');
-			if (p.a === 'i') params = ['-g', 'install'];
-			else if (p.a === 'u') params = ['-g', 'uninstall'];
+			if (p.a === 'i') params = ['-g', '--unsafe-perm', 'install'];
+			else if (p.a === 'u') params = ['-g', '--unsafe-perm', 'uninstall'];
 		}
 		else if (p.l === 'python')
 		{
