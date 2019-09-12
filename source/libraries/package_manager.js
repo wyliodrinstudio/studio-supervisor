@@ -113,7 +113,7 @@ uplink.tags.on ('pm', function (p)
 		}
 		else if (p.l === 'python')
 		{
-			manager = 'pip';
+			manager = 'pip3';
 			if (p.a === 'i') params = ['install'];
 			else if (p.a === 'u') params = ['uninstall', '--yes'];
 		}
@@ -149,7 +149,7 @@ uplink.tags.on ('pm', function (p)
 		{
 			// debug ('runmanager '+runmanager[p.l][p.p].pid);
 			if (p.l === 'nodejs') child_process.exec ('sudo killall npm');
-			else if (p.l === 'python') child_process.exec ('sudo killall pip');
+			else if (p.l === 'python') child_process.exec ('sudo killall pip3');
 
 		}
 	}
