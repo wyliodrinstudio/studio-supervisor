@@ -4,7 +4,7 @@
 var util = require ('../util.js');
 var debug = require ('debug')('wyliodrin:app:server:uplink');
 var serialport = util.load ('serialport');
-var msgpack = require ('msgpack-lite');
+var msgpack = require ('msgpack5')();
 var EventEmitter = require ('events').EventEmitter;
 var bonjour = require ('./bonjour');
 var settings = require ('./settings');

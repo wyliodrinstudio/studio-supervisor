@@ -74,7 +74,14 @@ try
 }
 catch (e)
 {
-	
+	if (settings.CONFIG_FILE.wireless)
+	{
+		wifi_connect ({
+			i: settings.CONFIG_FILE.wireless.adapter || 'wlan0',
+			s: settings.CONFIG_FILE.wireless.ssid,
+			p: settings.CONFIG_FILE.wireless.password
+		});
+	}
 }
 
 debug ('Registering for tag net');
