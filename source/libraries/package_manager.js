@@ -45,7 +45,7 @@ function listPackagesNodejs (done)
 function listPackagesPython (done)
 {
 	debug ('List packages nodejs');
-	child_process.exec ('pip list', function (error, stdout, stderr)
+	child_process.exec ('pip3 list --format=json', function (error, stdout, stderr)
 	{
 		if (error)
 		{
@@ -56,22 +56,14 @@ function listPackagesPython (done)
 		{
 			try
 			{
-				var pippackages = stdout.split ('\n');
-				var packages = [];
-				var regex = /([^\s]+)\s\(([^\)]+)\)/;
-				_.each (pippackages, function (packagevalue)
-				{
-					if (packagevalue.length > 0)
-					{
-						var value = packagevalue.match(regex);
-						if (value.length > 0)
-						{
-							packages.push ({n:value[1], v:value[2]});
-						}
-						// console.log (packagevalue.match(regex));
+				var pippackages = JSON.parse (stdout);
+				var packages = pippackages.map ((p) => {
+					return {
+						n: p.name,
+						v: p.version
 					}
 				});
-				// console.log (packages);
+				console.log (packages);
 				done (null, packages);
 			}
 			catch (e)
