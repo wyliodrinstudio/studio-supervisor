@@ -58,9 +58,7 @@ function treeToFilesystem(tree,folder,ext,generalMakefile){
 					if (child.name.toLowerCase() == "makefile"){
 						//found user defined makefile
 						var makepath = path.join(d, "Makefile.firmware");
-						fs.writeFileSync(makepath, child.content, function(err) {
-						   	if(err) { console.log(err) }
-						});
+						fs.writeFileSync(makepath, child.content);
 						tree[i].children.splice(j,1);
 						userDefined = true;
 						break;
@@ -71,32 +69,24 @@ function treeToFilesystem(tree,folder,ext,generalMakefile){
 				if (!userDefined){
 					//default makefile
 					var makepath = path.join(d, "Makefile.firmware");
-					fs.writeFileSync(makepath, tree[i].m.ca, function(err) {
-					   	if(err) { console.log(err) }
-					});
+					fs.writeFileSync(makepath, tree[i].m.ca);
 				}
 
 				var makepath = path.join(d, "Makefile.send");
 				if (tree[i].m.s){
-					fs.writeFileSync(makepath, tree[i].m.s, function(err) {
-				    	if(err) { console.log(err) }
-					});
+					fs.writeFileSync(makepath, tree[i].m.s);
 					here = false;
 				}
 
 				makepath = path.join(d, "Makefile.compileHere");
 				if (tree[i].m.ch){
-					fs.writeFileSync(makepath, tree[i].m.ch, function(err) {
-				    	if(err) { console.log(err) }
-					});
+					fs.writeFileSync(makepath, tree[i].m.ch);
 					here = true;
 				}
 
 				makepath = path.join(d, "Makefile.flash");
 				if (tree[i].m.f){
-					fs.writeFileSync(makepath, tree[i].m.f, function(err) {
-				    	if(err) { console.log(err) }
-					});
+					fs.writeFileSync(makepath, tree[i].m.f);
 				}
 				generalMakefile = firmware_makefile(generalMakefile,here,d,tree[i].faketype,tree[i].fakesubtype,tree[i].fport);
 
@@ -111,9 +101,7 @@ function treeToFilesystem(tree,folder,ext,generalMakefile){
 			if (tree[i].name.toLowerCase() != "makefile"){
 				var d = path.join(folder, tree[i].name);
 				
-				fs.writeFileSync(d, tree[i].content, function(err) {
-				    if(err) { console.log(err) }
-				}); 
+				fs.writeFileSync(d, tree[i].content); 
 			}
 		}
 	}
