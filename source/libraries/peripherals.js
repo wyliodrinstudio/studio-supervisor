@@ -2,7 +2,7 @@
 
 var util = require ('../util.js');
 var _ = require ('lodash');
-var msgpack = require ('msgpack-lite');
+var msgpack = require ('msgpack5')();
 var child_process = require ('child_process');
 var _ = require ('lodash');
 var gadget = require ('./gadget');
