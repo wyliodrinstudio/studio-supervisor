@@ -18,6 +18,7 @@ var gadget = require ('./gadget');
 var net = require ('net');
 var WebSocket = require ('ws');
 var fs = require ('fs');
+var crypto = require('crypto');
 
 var ws = null;
 
@@ -32,7 +33,7 @@ try
 {
 	websocketServer = JSON.parse (fs.readFileSync (SETTINGS.config_file)).server;
 	token = JSON.parse (fs.readFileSync (SETTINGS.config_file)).token;
-	id = JSON.parse (fs.readFileSync (SETTINGS.config_file)).id;
+	id = crypto.createHash('md5').update(JSON.parse (fs.readFileSync (SETTINGS.config_file)).id).digest("hex");
 }
 catch (e)
 {

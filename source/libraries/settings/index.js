@@ -68,6 +68,7 @@ var CONFIG_FILE = {};
 try
 {
 	CONFIG_FILE = require (SETTINGS.CONFIG_FILE);
+	if (CONFIG_FILE.id) boardname = CONFIG_FILE.id;
 }
 catch (e)
 {
