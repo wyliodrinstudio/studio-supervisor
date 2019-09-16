@@ -1,7 +1,7 @@
 {
   "name": "studio-supervisor",
   "bin": "source/startup.js",
-  "version": "1.2.2",
+  "version": "1.2.5",
   "main": "source/startup.js",
   "repository": "https://github.com/wyliodrinstudio/studio-supervisor",
   "dependencies": {
