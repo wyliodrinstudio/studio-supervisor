@@ -302,7 +302,7 @@ function run ()
 
 	module.exports.server = server;
 
-	server.listen (CONFIG_FILE.server || 7000, function (err)
+	server.listen (7000, function (err)
 	{
 		bonjour.publish ();
 	});
