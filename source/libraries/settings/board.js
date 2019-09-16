@@ -27,6 +27,19 @@ var board = {
 			capabilities: {'nodejs':true, 'visual':true, 'powershell':true}
 		}
 	},
+	'picopi':
+	{
+		linux:
+		{
+			firmware:'/Arduino/src/Arduino.ino',
+			firmware_makefile: '',
+			signals:'redis',
+			nettype:'iwconfig',
+			shell:'bash',
+			avahi:'publish',
+			capabilities: {'nodejs':true, 'python':true, 'visual':true, 'shell':true, 'csharp':true}
+		}
+	},
 	'beagleboneblack':
 	{
 		serial:'/dev/ttyGS0',
