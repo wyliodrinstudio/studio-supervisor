@@ -2,7 +2,6 @@ import sys
 import json
 import os
 import traceback
-import types
 
 import redis
 
@@ -42,7 +41,7 @@ def wyliodrin_display (value):
 		return
 	__builtins__._ = None
 	#print isinstance (value, (types.TypeType, types.ClassType, types.ObjectType))
-	if isinstance (value, (types.TypeType, types.ClassType, types.ObjectType)):
+	if type(value) in [type, object]:
 		#print 'object'
 		# HTML
 		if not strvalue:
