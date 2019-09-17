@@ -50,7 +50,7 @@ def wyliodrin_display (value):
 				if callable (value._repr_html_):
 					strvalue = value._repr_html_ ()
 					strtype = '<format \'html\'>'
-			except Exception, e:
+			except Exception as e:
 				pass
 		# SVG
 		if not strvalue:
@@ -58,7 +58,7 @@ def wyliodrin_display (value):
 				if callable (value._repr_svg_):
 					strvalue = value._repr_svg_ ()
 					strtype = '<format \'html\'>'
-			except Exception, e:
+			except Exception as e:
 				pass
 		# PNG
 		if not strvalue:
@@ -66,7 +66,7 @@ def wyliodrin_display (value):
 				if callable (value._repr_png_):
 					strvalue = value._repr_png_ ()
 					strtype = '<format \'png\'>'
-			except Exception, e:
+			except Exception as e:
 				pass
 		# JPG
 		if not strvalue:
@@ -74,7 +74,7 @@ def wyliodrin_display (value):
 				if callable (value._repr_jpg_):
 					strvalue = value._repr_jpg_ ()
 					strtype = '<format \'jpg\'>'
-			except Exception, e:
+			except Exception as e:
 				pass
 		# latex
 		if not strvalue:
@@ -82,7 +82,7 @@ def wyliodrin_display (value):
 				if callable (value._repr_latex_):
 					strvalue = value._repr_latex_ ()
 					strtype = '<format \'latex\'>'
-			except Exception, e:
+			except Exception as e:
 				pass
 		# types
 		pos = 0;
@@ -95,7 +95,7 @@ def wyliodrin_display (value):
 					strvalue =s
 				elif t:
 					return
-			except Exception, e:
+			except Exception as e:
 				pass
 			pos = pos + 1
 		# other
@@ -121,7 +121,7 @@ sys.ps1 = '>>>\n';
 sys.ps2 = '...\n';
 
 os.chdir (os.getenv ('HOME')+'/notebook')
-os.umask (002)
+os.umask (0o002)
 
 def wyliodrin_plot_type (value):
 	try:
@@ -133,8 +133,8 @@ def wyliodrin_plot_type (value):
 			imgdata = StringIO.StringIO ()
 			fig.savefig (imgdata, format='svg')
 			return ('<format \'svg\'>', imgdata.getvalue ())
-	except Exception, e:
-		print e
+	except Exception as e:
+		print (e)
 		pass
 	return (None, None)
 

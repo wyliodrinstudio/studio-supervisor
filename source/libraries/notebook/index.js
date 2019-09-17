@@ -70,7 +70,7 @@ function Python ()
 
 	this.sudo = false;
 
-	var cmd = 'python';
+	var cmd = 'python3';
 	var args = ['-u', 
 				'-i', 
 				path.join (__dirname, 'loader.py'), 
@@ -82,12 +82,12 @@ function Python ()
 	{
 		this.sudo = true;
 		cmd = 'sudo';
-		args.splice (0, 0, '-E', 'python');
+		args.splice (0, 0, '-E', 'python3');
 	}
 
-	mkdirp.sync (path.join(process.env.HOME, 'notebook'));
-	fs.chmodSync (path.join(process.env.HOME, 'notebook'), '2775');
-	fs.writeFileSync (path.join(process.env.HOME, 'notebook', 'matplotlibrc'), 'backend : Agg\n');
+	mkdirp.sync (path.join(settings.env.HOME, 'notebook'));
+	fs.chmodSync (path.join(settings.env.HOME, 'notebook'), '2775');
+	fs.writeFileSync (path.join(settings.env.HOME, 'notebook', 'matplotlibrc'), 'backend : Agg\n');
 	// console.log (parseInt ('0002', 8));
 	// var oldumask = process.umask (parseInt ('0002', 8));
 	this.python = child_process.spawn (cmd, args, {stdio: ['pipe', 'pipe', 'pipe'], 'env':_.assign (process.env, {'MPLBACKEND':'Agg'})});
@@ -521,7 +521,7 @@ uplink.tags.on ('note', function (p)
 	else
 	if (p.a === 'f')
 	{
-		var fdir = path.join (process.env.HOME,'notebook','firmware');
+		var fdir = path.join (settings.env.HOME,'notebook','firmware');
 		if (p.f && p.f.length>0)
 		{
 			if (serial) serial.kill ('SIGKILL');
@@ -587,7 +587,7 @@ uplink.tags.on ('note', function (p)
 	else
 	if (p.a === 'serial')
 	{
-		var fdir = path.join (process.env.HOME,'notebook','firmware');
+		var fdir = path.join (settings.env.HOME,'notebook','firmware');
 		if (p.l && p.l.length>0)
 		{
 			var label = p.l;

@@ -173,7 +173,7 @@ uplink.tags.on ('fe', function (p)
 	}
 	if (p.a == "phd")
 	{
-		uplink.send ('fe2', process.env.HOME);
+		uplink.send ('fe2', settings.env.HOME);
 	}
 	if (p.a == "down")
 	{
