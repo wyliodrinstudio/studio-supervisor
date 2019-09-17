@@ -84,11 +84,11 @@ function sendVersion ()
 	debug ('Sending version');
 	child_process.exec("wylio -v", function (err, stdout, stderr){
 		if (err){
-			uplink.send ('sv', {v:version, os:os.type()+' '+os.release()});
+			uplink.send ('sv', {v:version, wyliolab:process.argv[3]==='wyliolab'?'1.0.0':'', os:os.type()+' '+os.release()});
 			console.log(err);
 		}
 		else{
-			uplink.send ('sv', {v:version, os:os.type()+' '+os.release(), libv:stdout});
+			uplink.send ('sv', {v:version, wyliolab:process.argv[3]==='wyliolab'?'1.0.0':'', os:os.type()+' '+os.release(), libv:stdout});
 		}
 	});
 }

@@ -31,7 +31,7 @@ var package_manager = require ('./libraries/package_manager');
 var signal = require ('./libraries/signal');
 var notebook = require ('./libraries/notebook');
 var wyliolab;
-if (process.args[3] === 'wyliolab')
+if (process.argv[3] === 'wyliolab')
 {
 	wyliolab = require ('./libraries/laboratory');
 }
