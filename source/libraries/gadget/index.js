@@ -32,7 +32,7 @@ uplink.tags.on ('n', function (p)
 	if (p.n && p.n.length > 0)
 	{
 		settings.boardname = p.n;
-		fs.writeFile (path.join (settings.env.HOME, 'boardname'), settings.boardname);
+		fs.writeFileSync (path.join (settings.env.HOME, 'boardname'), settings.boardname);
 		bonjour.publish ();
 		status ();
 	}
