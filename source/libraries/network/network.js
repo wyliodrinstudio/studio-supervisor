@@ -4,7 +4,7 @@
 var child_process = require ('child_process');
 
 var iwlist = require ('wireless-tools/iwlist');
-var wpa_supplicant = require ('wireless-tools/wpa_supplicant');
+var wpa_supplicant = require ('./wpa_supplicant');
 
 var device = process.argv[2];
 var a = process.argv[3];
