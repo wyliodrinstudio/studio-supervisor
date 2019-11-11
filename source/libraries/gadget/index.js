@@ -42,6 +42,7 @@ debug ('Registering for tag i');
 uplink.tags.on ('i', function (p)
 {
 	status ();
+	capabilities ();
 	sendVersion ();
 });
 
