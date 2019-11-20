@@ -51,7 +51,22 @@ function websocketConnect ()
 		let previousSend = _send;
 		ws = new WebSocket(websocketServer);
 		ws.on ('open', function (){
-			if (!socket)
+			ws.send (JSON.stringify ({t: 'a', token: token, id: id, name: settings.boardname, board: settings.boardtype}));
+		});
+		ws.on ('message', function (m){
+			if (!keepalive)
+			{
+				keepalive = setInterval (function ()
+				{
+					send ('ping', null);
+				}, 10*1000);
+			}
+			try
+			{
+				let data = JSON.parse (m);
+				if (data.t === 'a')
+				{
+					if (!socket)
 			{
 				let previousSend = _send;
 				reset (SOCKET);
@@ -84,27 +99,11 @@ function websocketConnect ()
 						process.nextTick (done);
 					}
 				};
-				ws.send (JSON.stringify ({t: 'a', token: token, id: id, name: settings.boardname, board: settings.boardtype}));
 			}
 			else
 			{
 				ws.close ();
 			}
-		});
-		ws.on ('message', function (m){
-			if (!keepalive)
-			{
-				keepalive = setInterval (function ()
-				{
-					send ('ping', null);
-				}, 10*1000);
-			}
-			try
-			{
-				let data = JSON.parse (m);
-				if (data.t === 'a')
-				{
-					// TODO authenticate?
 				}
 				else
 				if (data.t === 'p')
