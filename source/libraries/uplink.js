@@ -183,7 +183,7 @@ function run ()
 		if (board.serial !== null)
 		{
 			serial = new SerialPort (board.serial, {
-				baudrate: CONFIG_FILE.serialbaudrate || 115200,
+				baudRate: CONFIG_FILE.serialbaudrate || 115200,
 				autoOpen: false
 			});
 
@@ -682,7 +682,7 @@ tags.on ('ping', function (p)
 debug ('Registering for tag d');
 tags.on ('d', function (p)
 {
-	socket.end ();
+	if(socket !== null) socket.end ();
 	reset (SERIAL);
 });
 
