@@ -1,5 +1,5 @@
 
-"use strict";
+'use strict';
 
 var util = require ('../util.js');
 var debug = require ('debug')('wyliodrin:app:server:uplink');
@@ -11,9 +11,8 @@ var settings = require ('./settings');
 var CONFIG_FILE = settings.CONFIG_FILE;
 var board = settings.board;
 var SETTINGS = settings.SETTINGS;
-var pam = util.load ('authenticate-pam');
 var _ = require ('lodash');
-var path = require ('path');
+var pam = util.load ('authenticate-pam');
 var gadget = require ('./gadget');
 var net = require ('net');
 var WebSocket = require ('ws');
@@ -33,11 +32,12 @@ try
 {
 	websocketServer = JSON.parse (fs.readFileSync (SETTINGS.config_file)).server;
 	token = JSON.parse (fs.readFileSync (SETTINGS.config_file)).token;
-	id = crypto.createHash('md5').update(JSON.parse (fs.readFileSync (SETTINGS.config_file)).id).digest("hex");
+	id = crypto.createHash('md5').update(JSON.parse (fs.readFileSync (SETTINGS.config_file)).id).digest('hex');
 }
 catch (e)
 {
-	console.log ('Config file no available, websocket is disabled ('+e.message+')');
+	/* eslint-disable-next-line no-console */
+	console.error ('Config file no available, websocket is disabled ('+e.message+')');
 }
 
 if (websocketServer && token && id) websocketConnect ();
@@ -48,14 +48,12 @@ function websocketConnect ()
 	debug ('WebSocket connect to '+websocketServer);
 	if (!ws)
 	{
-		let previousSend = _send;
 		ws = new WebSocket(websocketServer);
 		ws.on ('open', function (){
 			if (!socket)
 			{
-				let previousSend = _send;
 				reset (SOCKET);
-				console.log ('Websocket connected')
+				debug ('Websocket connected');
 				socketError = null;
 				reconnectTime = 500;
 				socket = {
@@ -65,22 +63,26 @@ function websocketConnect ()
 						{
 							ws.close();
 						}
-						else log.error ('SOCKET_END socket is null');
+						else 
+						{
+							/* eslint-disable-next-line no-console */
+							console.error ('SOCKET_END socket is null');
+						}
 					},
 					write: function (data, done)
 					{
-						console.log (data);
 						if (ws)
-						{
-							// console.log ('Writing to socket '+data.length+' bytes');
-							console.log (data.toString ('base64'));
+						{	
 							ws.send (JSON.stringify ({t:'p', d: data.toString ('base64')}));
 							// process.nextTick (function ()
 							// {
 							// 	done ();
 							// });
 						}
-						else log.error ('SOCKET_WRITE socket is null');
+						else {
+							/* eslint-disable-next-line no-console */
+							console.error ('SOCKET_WRITE socket is null');
+						}
 						process.nextTick (done);
 					}
 				};
@@ -104,7 +106,7 @@ function websocketConnect ()
 				let data = JSON.parse (m);
 				if (data.t === 'a')
 				{
-					
+					// TODO
 				}
 				else
 				if (data.t === 'p')
@@ -118,7 +120,8 @@ function websocketConnect ()
 			}
 			catch (e)
 			{
-				console.log ('WebSocket packet '+e.message);
+				/* eslint-disable-next-line no-console */
+				console.error ('WebSocket packet '+e.message);
 			}
 		});
 
@@ -126,6 +129,7 @@ function websocketConnect ()
 		{
 			if (!socketError)
 			{
+				/* eslint-disable-next-line no-console */
 				console.error ('WebSocket '+error.message);
 				socketError = error.message;
 			}
@@ -135,7 +139,7 @@ function websocketConnect ()
 		{
 			if (!socketError)
 			{
-				console.log ('Websocket closed');
+				debug ('Websocket closed');
 			}
 			// debug ('Socket disconnect');
 			// login = false;
@@ -156,6 +160,7 @@ function websocketConnect ()
 
 }
 
+/* eslint-disable-next-line no-console */
 console.log ('Loading uplink library');
 
 var SOCKET = 1;
@@ -189,7 +194,7 @@ function run ()
 
 			serial.open (function (error)
 			{
-				console.log ('open');
+				debug ('open serial '+board.serial+ ' at '+(CONFIG_FILE.serialbaudrate || 115200));
 				if (!error)
 				{
 					debug ('Serial connected');
@@ -201,14 +206,14 @@ function run ()
 				}
 				else
 				{
-					console.log (error);
+					/* eslint-disable-next-line no-console */
+					console.error (error);
 				}	
 			});
 
 			serial.on ('error', function (error)
 			{
 				debug ('Serial port error '+error);
-				console.log (error);
 			});
 
 			serial.on ('data', function (data)
@@ -263,7 +268,6 @@ function run ()
 
 			socket.on ('timeout', function ()
 			{
-				console.log ('timeout');
 				socket.destroy ();
 				debug ('Socket timeout');
 				login = false;
@@ -272,7 +276,6 @@ function run ()
 
 			socket.on ('error', function ()
 			{
-				console.log ('error');
 				debug ('Socket error '+socket);
 				reset (SERIAL);
 				login = false;
@@ -281,7 +284,6 @@ function run ()
 
 			socket.on ('end', function ()
 			{
-				console.log ('disconnect');
 				reset (SERIAL);
 				debug ('Socket disconnect');
 				login = false;
@@ -290,7 +292,8 @@ function run ()
 		}
 		else
 		{
-			debug ('There is another connection already');
+			/* eslint-disable-next-line no-console */
+			console.error ('There is another connection already');
 			var m = escape(msgpack.encode ({t:'e', d:{s: 'busy'}}));
 			_socket.write ('', function (){});
 			_socket.write (BUFFER_PACKET_SEPARATOR, function (){});
@@ -304,13 +307,15 @@ function run ()
 
 	server.listen (7000, function (err)
 	{
+		if (err) {
+			/* eslint-disable-next-line no-console */
+			console.error ('Server error '+err.message);
+		}
 		bonjour.publish ();
 	});
 }
 
 var server = null;
-
-var socketConnected = false;
 
 var packets = new EventEmitter ();
 var tags = new EventEmitter ();
@@ -366,11 +371,11 @@ function packet ()
 	try
 	{
 		m = msgpack.decode (data);
-		console.log (m);
 	}
 	catch (e)
 	{
-		console.log ('Received a packet with errors');
+		/* eslint-disable-next-line no-console */
+		console.error ('Received a packet with errors');
 	}
 	return m;
 }
@@ -574,7 +579,7 @@ function _serialSend ()
 				if (isConnected)
 				{
 					serialSending = true;
-					serial.write (m, function (err, result)
+					serial.write (m, function (err/*, result*/)
 					{
 						if (!err)
 						{
@@ -583,10 +588,11 @@ function _serialSend ()
 						else 
 						{
 							debug ('Serial send error '+m);
-							console.log (err);
+							/* eslint-disable-next-line no-console */
+							console.error (err);
 						}
 					});
-					serial.write (BUFFER_PACKET_SEPARATOR, function (err, result)
+					serial.write (BUFFER_PACKET_SEPARATOR, function (/* err, result */)
 					{
 						serialSending = false;
 						_serialSend ();
@@ -647,10 +653,11 @@ function _socketSend ()
 					else 
 					{
 						debug ('Socket send error '+m);
-						console.log (err);
+						/* eslint-disable-next-line no-console */
+						console.error (err);
 					}
 				});
-				socket.write (BUFFER_PACKET_SEPARATOR, function (err, result)
+				socket.write (BUFFER_PACKET_SEPARATOR, function (/* err, result */)
 				{
 					socketSending = false;
 					_socketSend ();
@@ -674,13 +681,13 @@ function _socketSend ()
 }
 
 debug ('Registering for tag ping');
-tags.on ('ping', function (p)
+tags.on ('ping', function (/* p */)
 {
 	send ('pong', null);
 });
 
 debug ('Registering for tag d');
-tags.on ('d', function (p)
+tags.on ('d', function (/* p */)
 {
 	socket.end ();
 	reset (SERIAL);
@@ -695,5 +702,5 @@ module.exports.run = run;
 module.exports.inUse = function inUse ()
 {
 	return websocketServer !== null || socket !== null;
-}
+};
 

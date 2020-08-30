@@ -1,5 +1,5 @@
 
-"use strict";
+'use strict';
 
 var uplink = require ('./uplink');
 var debug = require ('debug')('wylidorin:app:server:signal');
@@ -9,6 +9,7 @@ var redis = util.load ('redis');
 var dgram = require('dgram');
 var _ = require ('lodash');
 
+/* eslint-disable-next-line no-console */
 console.log ('Loading signal library');
 
 var client = null;
@@ -24,15 +25,16 @@ if (board.signals === 'redis' && redis)
 
 	subscriber.on ('error', function (error)
 	{
-		console.log ('subscriber redis '+error);
+		/* eslint-disable-next-line no-console */
+		console.error ('subscriber redis '+error);
 	});
 
-	subscriber.subscribe ("wyliodrin-project", function (channel, count)
+	subscriber.subscribe ('wyliodrin-project', function (channel/*, count */)
 	{
-		debug ("Subscribed");
+		debug ('Subscribed to '+channel);
 	});
 
-	subscriber.on ("message", function (channel, message)
+	subscriber.on ('message', function (channel, message)
 	{
 		if (message.indexOf ('signal:app-project')===0)
 		{
@@ -43,7 +45,8 @@ if (board.signals === 'redis' && redis)
 
 	client.on ('error', function (error)
 	{
-		console.log ('client redis '+error);
+		/* eslint-disable-next-line no-console */
+		console.error ('client redis '+error);
 	});
 
 	debug ('Erasing signals');
@@ -55,10 +58,11 @@ if (board.signals === 'udp' || !redis)
 	var udpserver = dgram.createSocket('udp4');
 	udpserver.on('error', function (err) 
 	{
-		console.log('server error: '+err.stack);
+		/* eslint-disable-next-line no-console */
+		console.error('server error: '+err.stack);
 		udpserver.close();
 	});
-	udpserver.on('message', function (msg, rinfo) 
+	udpserver.on('message', function (msg/* , rinfo */) 
 	{
 		var data = msg.toString().split (' ');
 		if (data.length >= 2)
@@ -72,7 +76,7 @@ if (board.signals === 'udp' || !redis)
 	udpserver.on('listening', function () 
 	{
 		var address = uplink.server.address();
-		console.log('server listening '+address.address+':'+address.port);
+		debug ('server listening '+address.address+':'+address.port);
 	});
 	udpserver.bind(7200);
 }

@@ -1,5 +1,5 @@
 
-"use strict";
+'use strict';
 
 var uplink = require ('./uplink');
 var debug = require ('debug')('wylidorin:app:server:package_manager');
@@ -8,12 +8,13 @@ var _ = require ('lodash');
 var settings = require ('./settings');
 var util = require ('../util.js');
 
+/* eslint-disable-next-line no-console */
 console.log ('Loading package_manager library');
 
 function listPackagesNodejs (done)
 {
 	debug ('List packages nodejs');
-	child_process.exec ('npm -g --depth=0 --json ls', function (error, stdout, stderr)
+	child_process.exec ('npm -g --depth=0 --json ls', function (error, stdout/*, stderr */)
 	{
 		if (error)
 		{
@@ -45,7 +46,7 @@ function listPackagesNodejs (done)
 function listPackagesPython (done)
 {
 	debug ('List packages nodejs');
-	child_process.exec ('pip3 list --format=json', function (error, stdout, stderr)
+	child_process.exec ('pip3 list --format=json', function (error, stdout/*, stderr */)
 	{
 		if (error)
 		{
@@ -61,9 +62,8 @@ function listPackagesPython (done)
 					return {
 						n: p.name,
 						v: p.version
-					}
+					};
 				});
-				console.log (packages);
 				done (null, packages);
 			}
 			catch (e)

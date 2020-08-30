@@ -1,5 +1,5 @@
 
-"use strict";
+'use strict';
 
 var util = require ('../util.js');
 var debug = require ('debug')('wyliodrin:app:server:shell');
@@ -8,6 +8,7 @@ var _ = require ('lodash');
 var settings = require ('./settings');
 var board = require ('./settings').board;
 
+/* eslint-disable-next-line no-console */
 console.log ('Loading shell library');
 
 var shell = null;
@@ -18,14 +19,14 @@ function openShell (p)
 	{
 		
 		shell = util.pty.spawn(board.shell, [], {
-		  name: 'xterm-color',
-		  cols: p.c,
-		  rows: p.r,
-		  cwd: '/wyliodrin',
-		  env: _.assign (process.env, settings.env)
+			name: 'xterm-color',
+			cols: p.c,
+			rows: p.r,
+			cwd: '/wyliodrin',
+			env: _.assign (process.env, settings.env)
 		});
 
-		shell.on ('error', function (error)
+		shell.on ('error', function (/* error */)
 		{
 			// send ('s', {a:'k', e:error});
 			// send ('s', {a:'k', t:'Shell closed\n'});
@@ -33,7 +34,7 @@ function openShell (p)
 		});
 
 		shell.on('data', function(data) {
-		  	uplink.sendLowPriority ('s', {a:'k', t:data});
+			uplink.sendLowPriority ('s', {a:'k', t:data});
 		});
 
 		shell.on ('exit', function ()

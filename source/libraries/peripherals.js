@@ -1,18 +1,19 @@
-"use strict";
+'use strict';
 
 var util = require ('../util.js');
-var _ = require ('lodash');
-var msgpack = require ('msgpack5')();
-var child_process = require ('child_process');
-var _ = require ('lodash');
 var gadget = require ('./gadget');
 var bonjour = require ('./bonjour');
+
+var _ = require ('lodash');
+
+var debug = require ('debug')('wylidorin:app:server:peripherals');
 
 var LIST_PERIPHERALS = 3000;
 
 var serialPorts = [];
 var peripherals = [];
 
+/* eslint-disable-next-line no-console */
 console.log ('Loading peripherals library');
 
 var serialport = util.load ('serialport');
@@ -37,8 +38,6 @@ function listPeripherals()
 					});
 				}
 			});
-			console.log (peripherals);
-			// console.log (msgpack.encode (peripherals).toString ('base64'));
 			gadget.status ();
 			bonjour.publish ();
 		}
@@ -51,7 +50,7 @@ function getPeripherals ()
 	return peripherals;
 }
 
-console.log ('Looking for peripherals every '+LIST_PERIPHERALS+' ms');
+debug ('Looking for peripherals every '+LIST_PERIPHERALS+' ms');
 
 listPeripherals ();
 

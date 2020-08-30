@@ -1,17 +1,18 @@
+'use strict';
 
-"use strict";
-
+var settings = require ('../settings');
 var path = require ('path');
 var fs = require ('fs');
 var debug = require ('debug')('wylidorin:app:server:file_explorer');
 var uplink = require ('./uplink');
-var rmdir = require ("rimraf");
+var rmdir = require ('rimraf');
 
+/* eslint-disable-next-line no-console */
 console.log ('Loading file_explorer library');
 
 function treeforce(arr,callback)
 {
-	var parts = "/";
+	var parts = '/';
 
 	arr.forEach( function (dir)
 	{
@@ -29,30 +30,31 @@ function linux_ls(place,list)
 {
 	fs.readdir(place, function (err, files) 
 	{
-	    if (err) 
-	    {
-	    	list(["ERROR"]);
-	    }
-	    else
-	    {
-		    var ls=[];
-		    files.forEach (function (file)
-		    {
-		        var lss = {};
-		        lss.name = file;
-		        try {
-		        	lss.size = fs.statSync(path.join(place,file)).size;
-		        	lss.isdir = fs.statSync(path.join(place,file)).isDirectory();
-		        	lss.isfile = fs.statSync(path.join(place,file)).isFile();
-		        	lss.islink = fs.lstatSync(path.join(place,file)).isSymbolicLink();
-		    	} catch (e) {
-		    		console.log("strange impossible to reproduce error in file explorer");
-		    	}
-		        ls.push(lss);
+		if (err) 
+		{
+			list(['ERROR']);
+		}
+		else
+		{
+			var ls=[];
+			files.forEach (function (file)
+			{
+				var lss = {};
+				lss.name = file;
+				try {
+					lss.size = fs.statSync(path.join(place,file)).size;
+					lss.isdir = fs.statSync(path.join(place,file)).isDirectory();
+					lss.isfile = fs.statSync(path.join(place,file)).isFile();
+					lss.islink = fs.lstatSync(path.join(place,file)).isSymbolicLink();
+				} catch (e) {
+					/* eslint-disable-next-line no-console */
+					console.error('strange impossible to reproduce error in file explorer');
+				}
+				ls.push(lss);
 			});
 			//console.log(ls);
-	    	list(ls);
-	    }
+			list(ls);
+		}
 	});
 }
 
@@ -61,17 +63,17 @@ function make_tree(place,callback){
 		var files = fs.readdirSync(place);
 
 		var ls=[];
-	    files.forEach (function (file)
-	    {
-	        var lss = {};
-	        lss.p = path.join(place,file);
-	        lss.d = fs.statSync(path.join(place,file)).isDirectory();
-	        //console.log(lss);
-	        ls.push(lss);
+		files.forEach (function (file)
+		{
+			var lss = {};
+			lss.p = path.join(place,file);
+			lss.d = fs.statSync(path.join(place,file)).isDirectory();
+			//console.log(lss);
+			ls.push(lss);
 		});
 		callback(ls);
 	} catch (e) {
-		callback(["ERROR"]);
+		callback(['ERROR']);
 	}
 }
 
@@ -134,26 +136,26 @@ function put_file(folder,file,content,t,end,calldone,callacces,callexist,callmor
 		}
 		else
 		{
-			throw "append to file";
+			throw 'append to file';
 		}
 	} catch (e) {
 		fs.appendFile(path.join(folder,file), content, function(err) 
 		{
-	    	if(err) 
-	    	{
-	        	callacces();
-	    	}
-	    	else
-	    	{
-	    		if (end)
-	    		{
-	    			calldone();
-	    		}
-	    		else
-	    		{
-	    			callmore();
-	    		}
-	    	}
+			if(err) 
+			{
+				callacces();
+			}
+			else
+			{
+				if (end)
+				{
+					calldone();
+				}
+				else
+				{
+					callmore();
+				}
+			}
 		});
 
 	}	
@@ -164,22 +166,22 @@ function put_file(folder,file,content,t,end,calldone,callacces,callexist,callmor
 debug ('Registering for tag fe');
 uplink.tags.on ('fe', function (p)
 {
-	if (p.a == "ls")
+	if (p.a == 'ls')
 	{
 		linux_ls (p.b,function (listoffolder)
 		{
 			uplink.send ('fe1', listoffolder);
 		});
 	}
-	if (p.a == "phd")
+	if (p.a == 'phd')
 	{
 		uplink.send ('fe2', settings.env.HOME);
 	}
-	if (p.a == "down")
+	if (p.a == 'down')
 	{
 		send_file(path.join(p.b,p.c),p.z,p.size,function (data,index,end,all)
 		{
-			uplink.send ("fe3",{f:data,i:index,end:end,all:all});
+			uplink.send ('fe3',{f:data,i:index,end:end,all:all});
 		}, function ()
 		{
 			uplink.send('fe6', {a:'down',e:'EACCES'});
@@ -189,22 +191,22 @@ uplink.tags.on ('fe', function (p)
 		});
 		
 	}
-	if (p.a == "tree")
+	if (p.a == 'tree')
 	{
 		make_tree(p.b,function (data)
 		{
-			uplink.send ("fe4",{a:data,p:p.b});
+			uplink.send ('fe4',{a:data,p:p.b});
 		});
 		
 	}
-	if (p.a == "treeforce")
+	if (p.a == 'treeforce')
 	{
 		treeforce(p.b,function (data,partsinside)
 		{
-			uplink.send ("fe5",{a:data,p:partsinside});
+			uplink.send ('fe5',{a:data,p:partsinside});
 		});
 	}
-	if (p.a == "up")
+	if (p.a == 'up')
 	{
 		put_file(p.b,p.c,p.d,p.t,p.end,function ()
 		{
@@ -221,7 +223,7 @@ uplink.tags.on ('fe', function (p)
 		});
 		
 	}
-	if (p.a == "del")
+	if (p.a == 'del')
 	{
 		try {
 			rmdir.sync(path.join(p.b,p.c));
@@ -230,7 +232,7 @@ uplink.tags.on ('fe', function (p)
 			uplink.send('fe6', {a:'del',e:e.code});
 		}
 	}
-	if (p.a == "ren")
+	if (p.a == 'ren')
 	{
 		try {
 			fs.statSync(path.join(p.b,p.d));
@@ -244,7 +246,7 @@ uplink.tags.on ('fe', function (p)
 			}
 		}
 	}
-	if (p.a == "newf")
+	if (p.a == 'newf')
 	{
 		try {
 			fs.mkdirSync(path.join(p.b,p.c),parseInt('0744',8));
