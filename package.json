@@ -2,7 +2,7 @@
 	"name": "studio-supervisor",
 	"bin": "source/startup.js",
 	"version": "1.2.26",
-  "main": "source/startup.js",
+	"main": "source/startup.js",
 	"repository": "https://github.com/wyliodrinstudio/studio-supervisor",
 	"dependencies": {
 		"async": "^3.1.0",
@@ -29,7 +29,7 @@
 		"eslint": "^7.7.0"
 	},
 	"scripts": {
-    "format": "npx eslint source/**/*.js --fix",
+		"format": "npx eslint source/**/*.js --fix",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"author": "Alexandru Radovici",
