@@ -3,8 +3,8 @@
 
 var uplink = require ('./uplink');
 var debug = require ('debug')('wylidorin:app:server:deployments');
-//var child_process = require ('child_process');
-//var settings = require ('./settings');
+var child_process = require ('child_process');
+var settings = require ('./settings');
 var _ = require ('lodash');
 var Docker =  require('dockerode');
 
