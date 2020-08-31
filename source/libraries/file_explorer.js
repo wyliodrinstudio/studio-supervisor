@@ -1,6 +1,6 @@
 'use strict';
 
-var settings = require ('../settings');
+var settings = require ('./settings');
 var path = require ('path');
 var fs = require ('fs');
 var debug = require ('debug')('wylidorin:app:server:file_explorer');
