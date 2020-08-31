@@ -494,7 +494,7 @@ uplink.tags.on ('note', function (p)
 			var l = python.evaluate (p.s, p.l);
 			uplink.send ('note', {
 				a:'r',
-				t:'r',
+				t:'d',
 				l: l
 			});
 		}

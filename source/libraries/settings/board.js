@@ -6,7 +6,7 @@ var board = {
 	{
 		linux:
 		{
-			serial:'/dev/ttyAMA0_offline',
+			serial:'/dev/ttyS0',
 			firmware:'/Arduino/src/Arduino.ino',
 			firmware_makefile: '',
 			signals:'redis',
