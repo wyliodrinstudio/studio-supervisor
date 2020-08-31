@@ -45,6 +45,12 @@ if (!boardtype)
 	process.exit (-10);
 }
 
+var boardserial = process.argv[3];
+if (boardserial)
+{
+    board[boardtype].serial = boardserial;
+}
+
 if (board[boardtype].linux || board[boardtype].windows)
 {
 	if (util.isWindows())
