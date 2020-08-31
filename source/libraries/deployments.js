@@ -1,5 +1,5 @@
 
-"use strict";
+'use strict';
 
 var uplink = require ('./uplink');
 var debug = require ('debug')('wylidorin:app:server:deployments');
@@ -29,7 +29,7 @@ function listofcontainers(containers)
 			// command: container.Command,
 			// state: container.State,
 			status: container.Status
-		})
+		});
 
 	} 
 	return containerstosend;
@@ -56,7 +56,7 @@ uplink.tags.on ('dep', function (c)
 					uplink.send('dep', listofcontainers(containers));
 				});
 
-			},s)
+			},s);
 			
            
 		}
