@@ -22,8 +22,9 @@ function listofcontainers(containers)
 
 	for (let container of containers)
 	{
+		
 		containerstosend.push({
-			name: container.Names[0],
+			name: container.Names[0].substring(1),
 			ID: container.Id,
 			image: container.Image,
 			// command: container.Command,
