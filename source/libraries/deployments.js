@@ -28,7 +28,7 @@ function listofcontainers(containers)
 			ID: container.Id,
 			image: container.Image,
 			// command: container.Command,
-			// state: container.State,
+			state: container.State,
 			status: container.Status
 		});
 
@@ -65,7 +65,12 @@ uplink.tags.on ('dep', function (c)
 	else
 	if (c.a === 'exit')
 	{
-		docker.getContainer(c.ID).stop(cb);
+		docker.getContainer(c.ID).stop();
+	}
+	else
+	if(c.a === 'delete')
+	{
+		docker.getContainer(c.ID).remove();
 	}
 	else
 	if (c.a === 'stop')
@@ -76,4 +81,5 @@ uplink.tags.on ('dep', function (c)
 			deployments = null;
 		}
 	}
+	
 });
