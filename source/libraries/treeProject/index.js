@@ -170,6 +170,7 @@ function stopProject ()
 function runProject (p)
 {
 	var dir = settings.SETTINGS.build_file+path.sep+'tree_project';
+	
 	var exec = child_process.exec;
 	var ext = 'js';
 	if (projectpid !== 0)
@@ -279,7 +280,7 @@ function runProject (p)
 					});
 					project = null;
 					projectpid = 0;
-					// console.log (runAnotherProject);
+				
 					if (runAnotherProject !== null) 
 					{
 						runProject (runAnotherProject);
@@ -294,7 +295,18 @@ function runProject (p)
 			});
 		}
 	}
+	console.log(p);
 }
+
+function deploy(p)
+{
+	if(p.dcfl === false)
+	{
+		uplink.send('Dockerfile non-existent');
+	}
+	console.log(p);
+}
+
 
 function resizeProject (cols, rows)
 {
@@ -322,6 +334,10 @@ uplink.tags.on ('tp', function (p)
 	{
 		keysProject (p.t);
 	}
+	else if (p.a === 'deploy')
+	{
+		deploy(p);
+	}
 });
 
 function getProjectPid ()
@@ -330,7 +346,6 @@ function getProjectPid ()
 }
 
 module.exports.getProjectPid = getProjectPid;
-
 
 
 
