@@ -295,16 +295,12 @@ function runProject (p)
 			});
 		}
 	}
-	console.log(p);
+	console.log (JSON.stringify (p, null, 3));
 }
 
 function deploy(p)
-{
-	if(p.dcfl === false)
-	{
-		uplink.send('Dockerfile non-existent');
-	}
-	console.log(p);
+{	
+	console.log (JSON.stringify (p, null, 3));
 }
 
 
