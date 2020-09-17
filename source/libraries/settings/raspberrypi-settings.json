@@ -5,6 +5,7 @@
     "build_file":   "/wyliodrin/projects/build",
     "shell":        "bash",
     "run":          "sudo -E make -f Makefile.raspberrypi run",
+    "deploy":       "sudo make -f Makefile.raspberrypi deploy",
     "stop":         "sudo kill -9",
     "poweroff":     "sudo poweroff",
     "logout":       "/etc/wyliodrin/logs.out",
