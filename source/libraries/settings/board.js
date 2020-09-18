@@ -51,6 +51,17 @@ var board = {
 		avahi:'publish',
 		capabilities: {'nodejs':true, 'python':true, 'visual':true, 'shell':true, 'csharp':true, 'streams':true}
 	},
+	'tockos':
+	{
+		linux:
+		{
+			signals:'redis',
+			nettype:'iwconfig',
+			shell:'bash',
+			avahi:'publish',
+			capabilities: {'c':true, 'rust': true}
+		},
+	},
 	'udooneo':
 	{
 		serial:'/dev/ttyGS0',
