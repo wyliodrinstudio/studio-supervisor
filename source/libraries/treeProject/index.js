@@ -16,6 +16,7 @@ var settings = require ('../settings');
 var async = require ('async');
 var rmdir = require ("rimraf");
 
+
 var PROJECT_PID_TEMP = '';
 
 var runAnotherProject = null;
@@ -105,6 +106,7 @@ function treeToFilesystem(tree,folder,ext,generalMakefile){
 			}
 		}
 	}
+	console.log(generalMakefile);
 	return generalMakefile;
 }
 
@@ -190,6 +192,12 @@ function runProject (p)
 		{
 			sudo = '';
 		}
+		
+
+		// console.log('settings');
+		// console.log (JSON.stringify (settings, null, 3));
+		
+		//console.log(sudo);
 
 		////////////////////////////am in dir folderul, in p.t arborele
 
@@ -202,10 +210,11 @@ function runProject (p)
 
 			//make the software firmware
 			var items = fs.readdirSync(dir);
+			console.log("deploy "+ p.deploy );
 
 			for (var i=0; i<items.length; i++) {
 				if(_.endsWith(items[i], ".software")){
-					generalMakefile += ("\t+$(MAKE) -C " + "'" + items[i] + "' -f Makefile.wyliodrin" + "\n");
+					generalMakefile += ("\t+$(MAKE) -C " + "'" + items[i] + "' -f Makefile.wyliodrin "+ (p.deploy?"deploy":"run") + "\n");
 				}
 			}
 
@@ -233,12 +242,13 @@ function runProject (p)
 				cmd = board.shell+' '+path.join (__dirname, 'run.sh')+' ';
 			}
 
-			console.log(cmd+dir+' "'+sudo+'" ');
+			//console.log(cmd+dir+' "'+sudo+'" ');
 			exec (cmd+dir+' "'+sudo+'" ', function (err, stdout, stderr)
 			{
 				startingProject = false;
 
 				debug ('err: '+err);
+
 				debug ('stdout: '+stdout);
 				debug ('stderr: '+stdout);
 				if (stdout) uplink.send ('tp', {a:'start', r:'s', s:'o', t:stdout});
@@ -247,15 +257,16 @@ function runProject (p)
 				
 				write_all_tree(p,dir,ext);
 
-				var makerun = settings.SETTINGS.run.split(' ');
+				var makerun = settings.SETTINGS.run.split(' '); //asta ruleaza
 				project = util.pty.spawn(makerun[0], makerun.slice (1), {
 				  name: 'xterm-color',
 				  cols: p.c,
 				  rows: p.r,
 				  cwd: dir,
 				  env: _.assign (process.env, gadget.env, {wyliodrin_project:"app-project"})
-				});
-
+				}); // ruleaza make run				
+				
+				
 				projectpid = project.pid;
 
 				fs.writeFileSync (PROJECT_PID_TEMP, projectpid);
@@ -295,14 +306,7 @@ function runProject (p)
 			});
 		}
 	}
-	console.log (JSON.stringify (p, null, 3));
 }
-
-function deploy(p)
-{	
-	console.log (JSON.stringify (p, null, 3));
-}
-
 
 function resizeProject (cols, rows)
 {
@@ -329,10 +333,6 @@ uplink.tags.on ('tp', function (p)
 	else if (p.a === 'k')
 	{
 		keysProject (p.t);
-	}
-	else if (p.a === 'deploy')
-	{
-		deploy(p);
 	}
 });
 
