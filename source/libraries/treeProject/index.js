@@ -193,12 +193,6 @@ function runProject (p)
 			sudo = '';
 		}
 		
-
-		// console.log('settings');
-		// console.log (JSON.stringify (settings, null, 3));
-		
-		//console.log(sudo);
-
 		////////////////////////////am in dir folderul, in p.t arborele
 
 		//rmdir.sync(dir);
