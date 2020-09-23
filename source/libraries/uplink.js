@@ -30,9 +30,18 @@ let reconnectTime = 500;
 
 try
 {
-	websocketServer = JSON.parse (fs.readFileSync (SETTINGS.config_file)).server;
-	token = JSON.parse (fs.readFileSync (SETTINGS.config_file)).token;
-	id = crypto.createHash('md5').update(JSON.parse (fs.readFileSync (SETTINGS.config_file)).id).digest('hex');
+	let config_file = null;
+	if (process.env.TOKEN) {
+		config_file = JSON.parse (Buffer.from (process.env.TOKEN, 'base64').toString());
+	}
+	else
+	{
+		config_file = JSON.parse (fs.readFileSync (SETTINGS.config_file));
+	}
+	websocketServer = config_file.server;
+	token = config_file.token;
+	id = crypto.createHash('md5').update(config_file.id).digest('hex');
+	settings.boardname = config_file.id;
 }
 catch (e)
 {

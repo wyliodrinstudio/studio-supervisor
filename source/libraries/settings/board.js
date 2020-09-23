@@ -55,7 +55,7 @@ var board = {
 	{
 		linux:
 		{
-			signals:'redis',
+			signals:'udp',
 			nettype:'iwconfig',
 			shell:'bash',
 			avahi:'publish',

@@ -1,6 +1,7 @@
 FROM ubuntu:20.04
 
 WORKDIR /wyliodrin
+ENV HOME=/wyliodrin
 
 # install python3 and build tools
 RUN apt-get update && apt-get install -y --no-install-recommends python3 python3-pip build-essential curl openocd git gcc-arm-none-eabi
@@ -20,5 +21,8 @@ RUN git clone https://github.com/tock/libtock-c.git
 # install studio-supervisor
 COPY . /wyliodrin/studio-supervisor
 RUN cd studio-supervisor npm install
+
+ENV TOCK_DIR=/wyliodrin/tock
+ENV PATH="${PATH}:/${HOME}/.cargo/bin"
 
 CMD cd /wyliodrin/studio-supervisor/source && node startup.js tockos
