@@ -20,7 +20,7 @@ RUN git clone https://github.com/tock/libtock-c.git
 
 # install studio-supervisor
 COPY . /wyliodrin/studio-supervisor
-RUN cd studio-supervisor npm install
+RUN cd studio-supervisor && npm install 
 
 ENV TOCK_DIR=/wyliodrin/tock
 ENV PATH="${PATH}:/${HOME}/.cargo/bin"
