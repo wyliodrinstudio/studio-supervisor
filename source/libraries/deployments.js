@@ -17,7 +17,6 @@ function listofcontainers(containers)
 
 	for (let container of containers)
 	{
-		//umbla aici
 		for(let label in container.Labels)
 		{
 			if(label.substring(0,6) === 'studio')
