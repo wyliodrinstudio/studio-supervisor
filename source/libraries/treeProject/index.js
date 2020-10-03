@@ -106,7 +106,6 @@ function treeToFilesystem(tree,folder,ext,generalMakefile){
 			}
 		}
 	}
-	console.log(generalMakefile);
 	return generalMakefile;
 }
 
@@ -204,7 +203,6 @@ function runProject (p)
 
 			//make the software firmware
 			var items = fs.readdirSync(dir);
-			console.log("deploy "+ p.deploy );
 
 			for (var i=0; i<items.length; i++) {
 				if(_.endsWith(items[i], ".software")){
