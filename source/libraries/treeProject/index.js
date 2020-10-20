@@ -191,8 +191,6 @@ function runProject (p)
 		{
 			sudo = '';
 		}
-		
-		////////////////////////////am in dir folderul, in p.t arborele
 
 		//rmdir.sync(dir);
 		//fs.mkdirSync(dir);
@@ -234,7 +232,6 @@ function runProject (p)
 				cmd = board.shell+' '+path.join (__dirname, 'run.sh')+' ';
 			}
 
-			//console.log(cmd+dir+' "'+sudo+'" ');
 			exec (cmd+dir+' "'+sudo+'" ', function (err, stdout, stderr)
 			{
 				startingProject = false;
@@ -249,15 +246,14 @@ function runProject (p)
 				
 				write_all_tree(p,dir,ext);
 
-				var makerun = settings.SETTINGS.run.split(' '); //asta ruleaza
+				var makerun = settings.SETTINGS.run.split(' ');
 				project = util.pty.spawn(makerun[0], makerun.slice (1), {
 				  name: 'xterm-color',
 				  cols: p.c,
 				  rows: p.r,
 				  cwd: dir,
 				  env: _.assign (process.env, gadget.env, {wyliodrin_project:"app-project"})
-				}); // ruleaza make run				
-				
+				}); 
 				
 				projectpid = project.pid;
 
