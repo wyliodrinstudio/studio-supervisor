@@ -1,7 +1,7 @@
 {
 	"name": "studio-supervisor",
 	"bin": "source/startup.js",
-	"version": "1.4.0",
+	"version": "1.4.1",
 	"main": "source/startup.js",
 	"repository": "https://github.com/wyliodrinstudio/studio-supervisor",
 	"dependencies": {
@@ -24,7 +24,7 @@
 		"ws": "^7.1.2"
 	},
 	"optionalDependencies": {
-		"serialport": "^7.1.5"
+		"serialport": "^9.0.2"
 	},
 	"devDependencies": {
 		"eslint": "^7.7.0"

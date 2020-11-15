@@ -20,6 +20,14 @@ var serialport = util.load ('serialport');
 function listPeripherals()
 {
 	// TODO a better way
+	if (serialport.list)
+	{
+		serialport.list = function (done) {
+			process.nextTick (function () {
+				done (null, []);
+			});
+		}
+	}
 	serialport.list (function (err, ports)
 	{
 		if (ports.length !== serialPorts.length)
