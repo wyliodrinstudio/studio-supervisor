@@ -16,6 +16,7 @@ var settings = require ('../settings');
 var async = require ('async');
 var rmdir = require ("rimraf");
 
+
 var PROJECT_PID_TEMP = '';
 
 var runAnotherProject = null;
@@ -170,6 +171,7 @@ function stopProject ()
 function runProject (p)
 {
 	var dir = settings.SETTINGS.build_file+path.sep+'tree_project';
+	
 	var exec = child_process.exec;
 	var ext = 'js';
 	if (projectpid !== 0)
@@ -190,8 +192,6 @@ function runProject (p)
 			sudo = '';
 		}
 
-		////////////////////////////am in dir folderul, in p.t arborele
-
 		//rmdir.sync(dir);
 		//fs.mkdirSync(dir);
 		var write_all_tree = function (p,dir,ext){
@@ -204,7 +204,7 @@ function runProject (p)
 
 			for (var i=0; i<items.length; i++) {
 				if(_.endsWith(items[i], ".software")){
-					generalMakefile += ("\t+$(MAKE) -C " + "'" + items[i] + "' -f Makefile.wyliodrin" + "\n");
+					generalMakefile += ("\t+$(MAKE) -C " + "'" + items[i] + "' -f Makefile.wyliodrin "+ (p.deploy?"deploy":"run") + "\n");
 				}
 			}
 
@@ -232,12 +232,12 @@ function runProject (p)
 				cmd = board.shell+' '+path.join (__dirname, 'run.sh')+' ';
 			}
 
-			console.log(cmd+dir+' "'+sudo+'" ');
 			exec (cmd+dir+' "'+sudo+'" ', function (err, stdout, stderr)
 			{
 				startingProject = false;
 
 				debug ('err: '+err);
+
 				debug ('stdout: '+stdout);
 				debug ('stderr: '+stdout);
 				if (stdout) uplink.send ('tp', {a:'start', r:'s', s:'o', t:stdout});
@@ -253,8 +253,8 @@ function runProject (p)
 				  rows: p.r,
 				  cwd: dir,
 				  env: _.assign (process.env, gadget.env, {wyliodrin_project:"app-project"})
-				});
-
+				}); 
+				
 				projectpid = project.pid;
 
 				fs.writeFileSync (PROJECT_PID_TEMP, projectpid);
@@ -279,7 +279,7 @@ function runProject (p)
 					});
 					project = null;
 					projectpid = 0;
-					// console.log (runAnotherProject);
+				
 					if (runAnotherProject !== null) 
 					{
 						runProject (runAnotherProject);
@@ -330,7 +330,6 @@ function getProjectPid ()
 }
 
 module.exports.getProjectPid = getProjectPid;
-
 
 
 

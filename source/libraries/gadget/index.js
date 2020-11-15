@@ -97,7 +97,7 @@ function sendVersion ()
 function capabilities ()
 {
 	debug ('Sending capabilities');
-	uplink.send ('capabilities', {pm:true, fe:true, net:true, tm:true, l:settings.board.capabilities});
+	uplink.send ('capabilities', {pm:true, fe:true, net:true, tm:true, l:settings.board.capabilities, dep:true});
 }
 
 module.exports.status = status;
