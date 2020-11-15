@@ -26,7 +26,7 @@ function listPeripherals()
 			process.nextTick (function () {
 				done (null, []);
 			});
-		}
+		};
 	}
 	serialport.list (function (err, ports)
 	{
