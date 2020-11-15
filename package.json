@@ -1,7 +1,7 @@
 {
 	"name": "studio-supervisor",
 	"bin": "source/startup.js",
-	"version": "1.4.1",
+	"version": "1.4.3",
 	"main": "source/startup.js",
 	"repository": "https://github.com/wyliodrinstudio/studio-supervisor",
 	"dependencies": {
@@ -15,7 +15,6 @@
 		"msgpack5": "^4.2.1",
 		"node-pty": "^0.9.0",
 		"onoff": "^4.1.4",
-		"redis": "^2.8.0",
 		"rimraf": "^3.0.0",
 		"split2": "^3.1.1",
 		"tcp-ping": "^0.1.1",

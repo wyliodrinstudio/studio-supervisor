@@ -9,7 +9,6 @@ var board = {
 			serial:'/dev/ttyS0',
 			firmware:'/Arduino/src/Arduino.ino',
 			firmware_makefile: '',
-			signals:'redis',
 			nettype:'iwconfig',
 			shell:'bash',
 			avahi:'publish',
@@ -20,7 +19,6 @@ var board = {
 			serial:'/dev/ttyAMA0',
 			firmware:'\\Arduino\\src\\Arduino.ino',
 			firmware_makefile: '',
-			signals:'udp',
 			nettype:'',
 			shell:'powershell.exe',
 			avahi:'publish',
@@ -33,7 +31,6 @@ var board = {
 		{
 			firmware:'/Arduino/src/Arduino.ino',
 			firmware_makefile: '',
-			signals:'redis',
 			nettype:'iwconfig',
 			shell:'bash',
 			avahi:'publish',
@@ -44,8 +41,7 @@ var board = {
 	{
 		serial:'/dev/ttyGS0',
 		firmware:'',
-		firmware_makefile: '',
-		signals:'redis',
+		firmware_makefile: ''
 		nettype:'iwconfig',
 		shell:'bash',
 		avahi:'publish',
@@ -55,8 +51,7 @@ var board = {
 	{
 		serial:'/dev/ttyGS0',
 		firmware:'/Arduino/Arduino.ino',
-		firmware_makefile: '',
-		signals:'redis',
+		firmware_makefile: ''
 		nettype:'nm',
 		shell:'bash',
 		avahi:'publish',
@@ -66,8 +61,7 @@ var board = {
 	{
 		serial:null,
 		firmware:'/Arduino/Arduino.ino',
-		firmware_makefile: '',
-		signals:'udp',
+		firmware_makefile: ''
 		nettype:'iwconfig',
 		shell:'sh',
 		avahi:'restart',
@@ -80,7 +74,6 @@ var board = {
 			serial:'/dev/ttyAMA0',
 			firmware:'',
 			firmware_makefile: '',
-			signals:'udp',
 			nettype:'',
 			shell:'powershell.exe',
 			avahi:'publish',

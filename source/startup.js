@@ -28,7 +28,6 @@ var file_explorer = require ('./libraries/file_explorer');
 var task_manager = require ('./libraries/task_manager');
 var update = require ('./libraries/update');
 var package_manager = require ('./libraries/package_manager');
-var signal = require ('./libraries/signal');
 var notebook = require ('./libraries/notebook');
 var wyliolab;
 var deployments = require('./libraries/deployments');
