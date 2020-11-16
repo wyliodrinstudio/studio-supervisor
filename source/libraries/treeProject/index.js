@@ -257,7 +257,7 @@ function runProject (p)
 				
 				projectpid = project.pid;
 
-				fs.writeFileSync (PROJECT_PID_TEMP, projectpid);
+				fs.writeFileSync (PROJECT_PID_TEMP, projectpid.toString());
 
 				if (project) uplink.send ('tp', {a:'start', r:'d'});
 				else uplink.send ('tp', {a:'start', r:'e'});
