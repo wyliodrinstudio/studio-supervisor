@@ -1,0 +1,2 @@
+If your JLink installer package is missing, please visit https://www.segger.com/downloads/jlink/JLink_Linux_x86_64.deb,
+download the file and add it do this folder (dependencies/JLink*.deb);
