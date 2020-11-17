@@ -25,7 +25,7 @@ COPY . /wyliodrin/studio-supervisor
 RUN cd studio-supervisor && npm install 
 
 #install jlink
-RUN if test -f /wyliodrin/studio-supervisor/dependecies/JLink_Linux_V686f_x86_64.deb; then apt install -y /wyliodrin/studio-supervisor/dependecies/JLink_Linux_V686f_x86_64.deb; else echo -e "\n\n\t\e[31m!!!\e[0mInstaller package for JLink is missing, please visit \e[31mhttps://www.segger.com/downloads/jlink/JLink_Linux_x86_64.deb\e[0m, download it and add it to the dependecies folder\n\n" && exit 1; fi 
+RUN if test -f /wyliodrin/studio-supervisor/dependecies/JLink_Linux_V*f_*.deb; then apt install -y /wyliodrin/studio-supervisor/dependecies/JLink_Linux_V*f_*.deb; else echo -e "\n\n\t\e[31m!!!\e[0mInstaller package for JLink is missing, please visit \e[31mhttps://www.segger.com/downloads/jlink/JLink_Linux_x86_64.deb\e[0m, download it and add it to the dependecies folder\n\n" && exit 1; fi 
 
 ENV TOCK_DIR=/wyliodrin/tock
 ENV PATH="${PATH}:/${HOME}/.cargo/bin"
