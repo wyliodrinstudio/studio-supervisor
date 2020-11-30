@@ -54,13 +54,7 @@ uplink.tags.on ('disc', function (p)
 		child_process.exec(poweroff, function (err, stdout, stderr){});
 	}
 	else if (p.a === "reboot"){
-		var reboot = settings.SETTINGS.poweroff.split(' ')[0];
-		if (reboot === "sudo"){
-			reboot = "sudo reboot";
-		}
-		else{
-			reboot = "reboot";
-		}
+		var reboot = settings.SETTINGS.reboot;
 		child_process.exec(reboot, function (err, stdout, stderr){});
 	}
 });
