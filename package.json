@@ -21,7 +21,7 @@
 		"tcp-ping": "^0.1.1",
 		"uuid": "^3.3.3",
 		"wireless-tools": "https://github.com/headlessPi/wireless-tools.git",
-		"ws": "^7.1.2"
+		"ws": "^7.4.6"
 	},
 	"optionalDependencies": {
 		"serialport": "^9.0.2"
