@@ -5,7 +5,7 @@
 	"main": "source/startup.js",
 	"repository": "https://github.com/wyliodrinstudio/studio-supervisor",
 	"dependencies": {
-		"async": "^3.1.0",
+		"async": "^3.2.2",
 		"debug": "^4.1.1",
 		"dockerode": "^3.2.1",
 		"ip": "^1.1.5",
